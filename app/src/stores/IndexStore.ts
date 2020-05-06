@@ -4,10 +4,10 @@ import axios from "axios";
 
 export function createIndexStore() {
     return {
-        test: "" as string,
-        earningsResponse: [] as Array<[]>,
-        dividendHistoryResponse: [] as Array<[]>,
-        instrumentsResponse: [] as Array<[]>,
+        array:[1,2,3],
+        earningsResponse: [] as any,
+        dividendHistoryResponse: [] as any,
+        instrumentResponse: [] as any
         // userData: {} as UserDataType,
         // data: {} as IndexResponseDataType,
         // buildFeedback: {} as any,
