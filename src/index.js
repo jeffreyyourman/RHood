@@ -8,6 +8,9 @@ const {
   syncInstruments,
 } = require("./models/jobs/allInstruments.jobs");
 const cron = require("node-cron");
+const cors = require("cors");
+
+app.use(cors());
 
 
 app.get("/api/instru", async (req, res) => {
@@ -19,8 +22,8 @@ app.get("/api/instru", async (req, res) => {
     });
   };
   const allInstruments = await getDocument();
-  console.log('allInstruments',allInstruments[0].data.length);
-  res.json({ allInstruments: allInstruments[0].data });
+  // console.log('allInstruments',allInstruments[0].data.length);
+  res.json({ myInstruments: allInstruments[0].data });
 });
 
 app.get("/api/dividend-history/:ticker", async (req, res) => {
