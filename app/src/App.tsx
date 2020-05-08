@@ -89,7 +89,7 @@ const App: React.FC = observer(() => {
   }, []);
   if (indexStore.instrumentResponse.length === 0) return null;
 
-  console.log("instrumentResponse", indexStore.instrumentResponse[0]);
+  // console.log("instrumentResponse", indexStore.instrumentResponse[0]);
 
   return <Dashboard />;
 });
