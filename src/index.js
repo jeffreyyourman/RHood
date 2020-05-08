@@ -28,46 +28,46 @@ app.get("/api/instru", async (req, res) => {
   res.json({ myInstruments: allInstruments[0].data });
 });
 
-app.get("/api/all-dividends", async (req, res) => {
-  var getDividends = () => {
+app.get("/api/stocks-dividend", async (req, res) => {
+  var getStockDividends = () => {
     return new Promise((resolve, reject) => {
       db.dividends.find(function (err, data) {
         err ? reject(err) : resolve(data);
       });
     });
   };
-  const allPaidDividends = await getDividends();
+  const allPaidDividends = await getStockDividends();
   // console.log('allPaidDividends',allPaidDividends[0].data.length);
-  res.json({ paidDividends: allPaidDividends[0].data });
+  res.json({ response: allPaidDividends[0].data });
 });
 
 
-app.get("/api/all-payments", async (req, res) => {
-  var getPayments = () => {
+app.get("/api/payment-history", async (req, res) => {
+  var getPaymentHistory = () => {
     return new Promise((resolve, reject) => {
       db.payments.find(function (err, data) {
         err ? reject(err) : resolve(data);
       });
     });
   };
-  const allPaidPayments = await getPayments();
+  const allPaymentHistory = await getPaymentHistory();
   
-  const allPayments = allPaidPayments[0].data.filter((payment) => {
+  const paymentHistory = allPaymentHistory[0].data.filter((payment) => {
     var year = new Date(payment.expected_landing_date).getFullYear();
     return year >= 2020 && payment;
   })
-  res.json({ paidpayments: allPayments });
+  res.json({ response: paymentHistory[0].data });
 });
 
 
 
 app.get("/api/dividend-history/:ticker", async (req, res) => {
   const ticker = req.params.ticker;
-  const dividendResponse = await axios.get(`https://api.nasdaq.com/api/quote/${ticker}/dividends?assetclass=stocks`);
-  dividendResponse.data.data.ticker = ticker
-  res.json({ response: dividendResponse.data });
+  const dividendHistoryResponse = await axios.get(`https://api.nasdaq.com/api/quote/${ticker}/dividends?assetclass=stocks`);
+  dividendHistoryResponse.data.data.ticker = ticker
+  res.json({ response: dividendHistoryResponse.data });
 });
-app.get("/api/earnings-date/:ticker", async (req, res) => {
+app.get("/api/stock-earnings-date/:ticker", async (req, res) => {
   // https://api.nasdaq.com/api/analyst/DIS/earnings-date 
     //announcement
   // https://api.nasdaq.com/api/analyst/DIS/earnings-forecast
@@ -76,9 +76,9 @@ app.get("/api/earnings-date/:ticker", async (req, res) => {
     // forcast
   const ticker = req.params.ticker;
   console.log('ticker', ticker);
-  const dividendResponse = await axios.get(`https://api.nasdaq.com/api/analyst/${ticker}/earnings-date`);
-  dividendResponse.data.data.ticker = ticker
-  res.json({ response: dividendResponse.data });
+  const earningsResponse = await axios.get(`https://api.nasdaq.com/api/analyst/${ticker}/earnings-date`);
+  earningsResponse.data.data.ticker = ticker
+  res.json({ response: earningsResponse.data });
 });
 
 // cron.schedule(

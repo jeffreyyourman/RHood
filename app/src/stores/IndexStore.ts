@@ -2,10 +2,9 @@
 
 export function createIndexStore() {
     return {
-        earningsResponse: [] as any,
         dividendHistoryResponse: [] as any,
         instrumentResponse: [] as any,
-        paymentsResponse: [] as any,
+        paymentHistoryResponse: [] as any,
         // startUpServices() {
            
         // }

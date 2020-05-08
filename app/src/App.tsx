@@ -25,8 +25,8 @@ import json12 from "./helpers/json/test12.json";
 import json13 from "./helpers/json/test13.json";
 import json14 from "./helpers/json/test14.json";
 import json15 from "./helpers/json/test15.json";
-
-interface instrumentResponse {
+import Dashboard from './modules/dashboard/container/Dashboard';
+export interface instrumentResponse {
   account: string,
   account_number: string,
   average_buy_price: string,
@@ -62,8 +62,8 @@ const App: React.FC = observer(() => {
       const instrumentsResponse = await Axios.get(`${API_INSTRUMENTS_URL}`);
 
       const myStocks = instrumentsResponse.data.myInstruments;
-      console.log('myStocks',myStocks[0])
-      console.log('json1',json1[0])
+      // console.log('myStocks',myStocks[0])
+      // console.log('json1',json1[0])
       for (let i = 0; i < myStocks.length; i++) {
         let stock = myStocks[i];
 
@@ -91,7 +91,7 @@ const App: React.FC = observer(() => {
 
   console.log("instrumentResponse", indexStore.instrumentResponse[0]);
 
-  return <>{indexStore.instrumentResponse.map((stock: instrumentResponse)=>{return <p key={stock.symbol}>{stock.symbol}</p>})}</>;
+  return <Dashboard />;
 });
 
 export default App;
