@@ -1,13 +1,14 @@
-import axios from "axios";
-// import {isObservableArray} from "mobx";
-// import * as rax from "retry-axios";
+// import axios from "axios";
 
 export function createIndexStore() {
     return {
-        array:[1,2,3],
         earningsResponse: [] as any,
         dividendHistoryResponse: [] as any,
-        instrumentResponse: [] as any
+        instrumentResponse: [] as any,
+        paymentsResponse: [] as any,
+        // startUpServices() {
+           
+        // }
         // userData: {} as UserDataType,
         // data: {} as IndexResponseDataType,
         // buildFeedback: {} as any,

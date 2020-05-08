@@ -1,0 +1,1 @@
+// const earningsResponse = Axios.get(`API_EARNINGS_URL/${ticker}`);

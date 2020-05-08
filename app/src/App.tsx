@@ -1,3 +1,5 @@
+// https://react-dnd.github.io/react-dnd/about
+
 import React, { useEffect } from "react";
 import "./App.css";
 // , useLocalStore
@@ -81,9 +83,8 @@ const App: React.FC = observer(() => {
         findSymbol(json14, stock);
         findSymbol(json15, stock);
       }
-      indexStore.instrumentResponse = observable(myStocks);
-      // const dividendsResponse = Axios.get(`API_DIVIDENDS_URL/${ticker}`)
-      // const earningsResponse = Axios.get(`API_EARNINGS_URL/${ticker}`)
+      indexStore.instrumentResponse = myStocks;
+      
     })();
   }, []);
   if (indexStore.instrumentResponse.length === 0) return null;
