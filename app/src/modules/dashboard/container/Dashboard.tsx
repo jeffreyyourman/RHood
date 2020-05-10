@@ -10,7 +10,9 @@ import { useIndexStore } from "../../../contexts/IndexStoreContext";
 import PaymentHistory from '../../payments/container/PaymentHistory';
 import DividendHistory from '../../dividends/dividendHistory/container/DividendHistory';
 
-import MyStocks from '../../stockinfo/container/MyStocks';
+import MyStocks from '../../myStocks/container/MyStocks';
+
+
 const Dashboard: React.FC = observer(() => {
   // const indexStore = useIndexStore();
 

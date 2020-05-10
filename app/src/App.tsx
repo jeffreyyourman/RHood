@@ -2,8 +2,6 @@
 
 import React, { useEffect } from "react";
 import "./App.css";
-// , useLocalStore
-// const localStore = useLocalStore(()=>{});
 
 import { observer } from "mobx-react";
 import { observable } from "mobx";
