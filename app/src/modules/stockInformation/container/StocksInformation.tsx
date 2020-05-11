@@ -38,10 +38,10 @@ const StocksInformation: React.FC<MyStockDividend> = observer(({backToAllStocks,
     <>
       <div>
   
-        <p>{chosenStock.average_buy_price}</p>
-        <p>{chosenStock.quantity}</p>
-        <p>{chosenStock.symbol}</p>
-        <p>{chosenStock.name}</p>
+        <p>Name: {chosenStock.name}</p>
+        <p>Average stock price: {chosenStock.average_buy_price}</p>
+        <p>Quantity:{chosenStock.quantity}</p>
+        <p>Symbol: {chosenStock.symbol}</p>
       </div>
       <button onClick={()=>backToAllStocks()}>back</button>
     </>

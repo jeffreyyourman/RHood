@@ -4,19 +4,23 @@ import React from "react";
 import { observer } from "mobx-react";
 // import { observable } from "mobx";
 // import { useIndexStore } from "../../../contexts/IndexStoreContext";
-import PaymentHistory from '../../payments/container/PaymentHistory';
-import DividendHistory from '../../dividends/dividendHistory/container/DividendHistory';
-import MyStocks from '../../myStocks/container/MyStocks';
+import PaymentHistory from "../../payments/container/PaymentHistory";
+import DividendHistory from "../../dividends/dividendHistory/container/DividendHistory";
+import MyStocks from "../../myStocks/container/MyStocks";
+import { DndProvider } from "react-dnd";
+import Backend from "react-dnd-html5-backend";
 
 const Dashboard: React.FC = observer(() => {
   // const indexStore = useIndexStore();
 
   return (
-      <div>
+    <div>
+      <DndProvider backend={Backend}>
         <PaymentHistory />
         <DividendHistory />
         <MyStocks />
-      </div>
+      </DndProvider>
+    </div>
   );
 });
 
