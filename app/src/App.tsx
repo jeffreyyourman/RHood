@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 
 import { observer } from "mobx-react";
-import { observable } from "mobx";
+// import { observable } from "mobx";
 import { useIndexStore } from "./contexts/IndexStoreContext";
 import Axios from "axios";
 import { API_INSTRUMENTS_URL } from "./helpers/variables";
@@ -24,7 +24,7 @@ import json13 from "./helpers/json/test13.json";
 import json14 from "./helpers/json/test14.json";
 import json15 from "./helpers/json/test15.json";
 import Dashboard from './modules/dashboard/container/Dashboard';
-export interface instrumentResponse {
+export interface allStocksResponseInterface {
   account: string,
   account_number: string,
   average_buy_price: string,
@@ -49,6 +49,7 @@ function findSymbol(json:any, stock:any) {
   json.some((e:any) => {
     if (e.url === stock.instrument) {
       stock.symbol = e.symbol;
+      stock.name = e.name;
     }
   });
 }
@@ -60,8 +61,7 @@ const App: React.FC = observer(() => {
       const instrumentsResponse = await Axios.get(`${API_INSTRUMENTS_URL}`);
 
       const myStocks = instrumentsResponse.data.myInstruments;
-      // console.log('myStocks',myStocks[0])
-      // console.log('json1',json1[0])
+
       for (let i = 0; i < myStocks.length; i++) {
         let stock = myStocks[i];
 
@@ -81,13 +81,12 @@ const App: React.FC = observer(() => {
         findSymbol(json14, stock);
         findSymbol(json15, stock);
       }
-      indexStore.instrumentResponse = myStocks;
+      indexStore.allStocksResponse = myStocks;
       
     })();
   }, []);
-  if (indexStore.instrumentResponse.length === 0) return null;
+  if (indexStore.allStocksResponse.length === 0) return null;
 
-  // console.log("instrumentResponse", indexStore.instrumentResponse[0]);
 
   return <Dashboard />;
 });

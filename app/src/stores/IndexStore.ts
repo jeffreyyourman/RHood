@@ -3,7 +3,7 @@
 export function createIndexStore() {
     return {
         dividendHistoryResponse: [] as any,
-        instrumentResponse: [] as any,
+        allStocksResponse: [] as any,
         paymentHistoryResponse: [] as any,
         // startUpServices() {
            

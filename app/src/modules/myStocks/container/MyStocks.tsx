@@ -1,33 +1,47 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useLocalStore, observer } from "mobx-react";
-import { observable } from "mobx";
 import { useIndexStore } from "../../../contexts/IndexStoreContext";
-import { instrumentResponse } from "../../../App";
-import StocksDividend from "../../dividends/stockDividend/container/StocksDividend";
+import { allStocksResponseInterface } from "../../../App";
+import StockInformation from "../../stockInformation/container/StocksInformation";
 
 const MyStocks: React.FC = observer(() => {
   const indexStore = useIndexStore();
-  
+
   const localStore = useLocalStore(() => ({
-    ticker: "",
-}));
+    chosenStock: {},
+    showStockInfo: false,
+    backToAllStocks(){this.showStockInfo = !this.showStockInfo}
+  }));
   return (
-    <>
-      <div>
-        My stocks are:
-        {indexStore.instrumentResponse.map((stock: instrumentResponse) => {
-          return (
-            <>
-              <p key={stock.symbol}>{stock.symbol}</p>
-              <button onClick={() => {localStore.ticker = stock.symbol}}>info</button>
-            </>
-          );
-        })}
-        {localStore.ticker !== "" &&  <StocksDividend ticker={localStore.ticker} />}
-        
-      </div>
-    </>
+    <div>
+      {!localStore.showStockInfo ? (
+        <>
+          My stocks are:
+          {indexStore.allStocksResponse.map((stock: allStocksResponseInterface) => {
+            return (
+              <>
+                <p key={stock.symbol}>{stock.symbol}</p>
+                <button
+                  onClick={() => {
+                    localStore.chosenStock = stock;
+                    localStore.backToAllStocks()
+                  }}
+                >
+                  info
+                </button>
+              </>
+            );
+          })}
+        </>
+      ) : (
+        <>
+          {Object.keys(localStore.chosenStock).length !== 0 && (
+            <StockInformation backToAllStocks={localStore.backToAllStocks} chosenStock={localStore.chosenStock} />
+          )}
+        </>
+      )}
+    </div>
   );
 });
 
