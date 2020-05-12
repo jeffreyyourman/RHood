@@ -14,7 +14,7 @@ const MyStocks: React.FC = observer(() => {
     backToAllStocks(){this.showStockInfo = !this.showStockInfo}
   }));
   return (
-    <div>
+    <div style={{'backgroundColor':'black', 'color': 'white'}}>
       {!localStore.showStockInfo ? (
         <>
           My stocks are:

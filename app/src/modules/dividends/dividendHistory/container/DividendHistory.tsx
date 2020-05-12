@@ -20,7 +20,7 @@ const DividendHistory: React.FC = observer(() => {
   }, []);
   return (
     <>
-      <div>DividendHistory</div>
+      <div style={{'backgroundColor':'gold', 'color': 'black'}}>DividendHistory</div>
     </>
   );
 });

@@ -22,7 +22,7 @@ const PaymentHistory: React.FC = observer(() => {
 
   return (
     <>
-      <div>PaymentHistory</div>
+      <div style={{'backgroundColor':'purple', 'color': 'white'}}>PaymentHistory</div>
     </>
   );
 });
