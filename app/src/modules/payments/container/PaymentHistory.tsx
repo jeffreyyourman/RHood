@@ -23,20 +23,24 @@ const PaymentHistory: React.FC = observer(() => {
   if (indexStore.paymentHistoryResponse.length === 0) {
     return <p>loading...</p>;
   }
+  
   let totalAmt = 0;
+  const displayPaymentHistory = indexStore.paymentHistoryResponse.map((value) => {
+    totalAmt = totalAmt + parseInt(value.amount);
+    return (
+      <>
+        <p>Date: {value.created_at}</p>
+        <p>Amount: {value.amount}</p>
+        <hr />
+      </>
+    );
+  })
   return (
     <div className="paymentContainer">
-      {indexStore.paymentHistoryResponse.map((value) => {
-        totalAmt = totalAmt + parseInt(value.amount);
-        return (
-          <>
-            <p>Date: {value.created_at}</p>
-            <p>Amount: {value.amount}</p>
-            <hr />
-          </>
-        );
-      })}
-      <p>{totalAmt}</p>
+
+      <p>Total: ${totalAmt}</p>
+
+      {displayPaymentHistory}
     </div>
   );
 });

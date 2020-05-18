@@ -3,10 +3,10 @@ const app = express();
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const db = require("./connection/config/db/database_connection");
-// const {
-//   // syncAllData,
-//   syncInstruments,
-// } = require("./models/jobs/allInstruments.jobs");
+const {
+  // syncAllData,
+  syncInstruments,
+} = require("./models/jobs/allInstruments.jobs");
 // const { dividendJob } = require("./models/jobs/dividends.jobs");
 // const { paymentsJob } = require("./models/jobs/payments.jobs");
 // const cron = require("node-cron");
