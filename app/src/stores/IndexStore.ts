@@ -5,6 +5,14 @@ export function createIndexStore() {
         dividendHistoryResponse: [] as any,
         allStocksResponse: [] as any,
         paymentHistoryResponse: [] as any,
+        formatter() {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+          })
+          return formatter;
+        }
         // startUpServices() {
            
         // }

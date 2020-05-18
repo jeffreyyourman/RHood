@@ -47,15 +47,15 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
       return <div>loading...</div>;
 
     }
-    console.log('chosenstock', chosenStock);
     return (
       <>
         <div>
           <p>Name: {chosenStock.name}</p>
-          <p>Average buy price: {parseInt(chosenStock.average_buy_price).toFixed(2)}</p>
-          <p>Average stock price: {parseInt(chosenStock.intraday_average_buy_price).toFixed(2)}</p>
+          <p>Average buy price: {indexStore.formatter().format(parseInt(chosenStock.average_buy_price))}</p>
+          <p>Average stock price: {indexStore.formatter().format(parseInt(chosenStock.intraday_average_buy_price))}</p>
           <p>Quantity:{parseInt(chosenStock.quantity).toFixed(2)}</p>
           <p>Symbol: {chosenStock.symbol}</p>
+          {localStore.stockDividendResponse.dividends.headers &&
           <table>
             <thead>
             <tr>
@@ -95,7 +95,7 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
               <td>{localStore.stockDividendResponse.dividends.rows[3].paymentDate}</td>
               <td>{localStore.stockDividendResponse.dividends.rows[3].recordDate}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>{localStore.stockDividendResponse.dividends.rows[4].amount}</td>
               <td>{localStore.stockDividendResponse.dividends.rows[4].declarationDate}</td>
               <td>{localStore.stockDividendResponse.dividends.rows[4].exOrEffDate}</td>
@@ -143,9 +143,10 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
               <td>{localStore.stockDividendResponse.dividends.rows[10].exOrEffDate}</td>
               <td>{localStore.stockDividendResponse.dividends.rows[10].paymentDate}</td>
               <td>{localStore.stockDividendResponse.dividends.rows[10].recordDate}</td>
-            </tr>
+            </tr> */}
             </tbody>
           </table>
+          }
         </div>
         <button onClick={() => backToAllStocks()}>back</button>
       </>

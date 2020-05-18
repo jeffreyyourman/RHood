@@ -22,20 +22,21 @@ const DividendHistory: React.FC = observer(() => {
     return <p>loading...</p>;
   }
   let totalAmt = 0;
-  const displayDividendHistory = indexStore.dividendHistoryResponse.map((value) => {
+  const displayDividendHistory = indexStore.dividendHistoryResponse.map((value, index) => {
     totalAmt = totalAmt + parseInt(value.amount);
     return (
-      <>
+      <React.Fragment key={index}>
         <p>Amount: {value.amount}</p>
         <p>Date: {value.payable_date}</p>
         <hr />
-      </>
+      </React.Fragment>
     );
   })
   return (
     
     <div className="dividendHistoryContainer">
-      <p>Total: ${totalAmt}</p>
+      
+      <h3>Total: {indexStore.formatter().format(totalAmt)}</h3>
       {displayDividendHistory}
     </div>
   );

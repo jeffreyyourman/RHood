@@ -18,7 +18,7 @@ const MyStocks: React.FC = observer(() => {
     <div className="myStocksContainer">
       {!localStore.showStockInfo ? (
         <>
-          <p>My Stocks: </p>
+          <h3>My Stocks: </h3>
           {indexStore.allStocksResponse.map((stock: allStocksResponseInterface) => {
             return (
               <div key={stock.symbol}>
