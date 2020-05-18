@@ -81,6 +81,7 @@ const App: React.FC = observer(() => {
         findSymbol(json14, stock);
         findSymbol(json15, stock);
       }
+      console.log('myStocks',myStocks)
       indexStore.allStocksResponse = myStocks;
       
     })();

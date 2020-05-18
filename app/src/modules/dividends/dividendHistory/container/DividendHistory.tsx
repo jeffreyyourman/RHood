@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { API_DIVIDENDS_HISTORY_URL } from "../../../../helpers/variables";
-
 import Axios from "axios";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
 import { useIndexStore } from "../../../../contexts/IndexStoreContext";
+import '../dividendHistory.css';
 
 const DividendHistory: React.FC = observer(() => {
   const indexStore = useIndexStore();
@@ -18,11 +18,29 @@ const DividendHistory: React.FC = observer(() => {
       indexStore.dividendHistoryResponse = dividendHistory;
     })();
   }, []);
+  if (indexStore.dividendHistoryResponse.length === 0) {
+    return <p>loading...</p>;
+  }
+  let totalAmt = 0;
+
   return (
-    <>
-      <div style={{'backgroundColor':'gold', 'color': 'black'}}>DividendHistory</div>
-    </>
+    
+    <div className="dividendHistoryContainer">
+      {indexStore.dividendHistoryResponse.map((value) => {
+        totalAmt = totalAmt + parseInt(value.amount);
+        return (
+          <>
+            <p>Amount: {value.amount}</p>
+            <p>Date: {value.payable_date}</p>
+            <hr />
+          </>
+        );
+      })}
+      <p>{totalAmt}</p>
+    </div>
   );
+
+
 });
 
 export default DividendHistory;

@@ -4,6 +4,7 @@ import { useLocalStore, observer } from "mobx-react";
 import { useIndexStore } from "../../../contexts/IndexStoreContext";
 import { allStocksResponseInterface } from "../../../App";
 import StockInformation from "../../stockInformation/container/StocksInformation";
+import '../myStocks.css';
 
 const MyStocks: React.FC = observer(() => {
   const indexStore = useIndexStore();
@@ -14,14 +15,14 @@ const MyStocks: React.FC = observer(() => {
     backToAllStocks(){this.showStockInfo = !this.showStockInfo}
   }));
   return (
-    <div style={{'backgroundColor':'black', 'color': 'white'}}>
+    <div className="myStocksContainer">
       {!localStore.showStockInfo ? (
         <>
           My stocks are:
           {indexStore.allStocksResponse.map((stock: allStocksResponseInterface) => {
             return (
-              <>
-                <p key={stock.symbol}>{stock.symbol}</p>
+              <div key={stock.symbol}>
+                <p>{stock.symbol}</p>
                 <button
                   onClick={() => {
                     localStore.chosenStock = stock;
@@ -30,7 +31,7 @@ const MyStocks: React.FC = observer(() => {
                 >
                   info
                 </button>
-              </>
+              </div>
             );
           })}
         </>
