@@ -4,7 +4,7 @@ import Axios from "axios";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
 import { useIndexStore } from "../../../../contexts/IndexStoreContext";
-import '../dividendHistory.css';
+import "../dividendHistory.css";
 
 const DividendHistory: React.FC = observer(() => {
   const indexStore = useIndexStore();
@@ -22,26 +22,41 @@ const DividendHistory: React.FC = observer(() => {
     return <p>loading...</p>;
   }
   let totalAmt = 0;
-  const displayDividendHistory = indexStore.dividendHistoryResponse.map((value, index) => {
-    totalAmt = totalAmt + parseInt(value.amount);
-    return (
-      <React.Fragment key={index}>
-        <p>Amount: {value.amount}</p>
-        <p>Date: {value.payable_date}</p>
-        <hr />
-      </React.Fragment>
-    );
-  })
+  let displayName = '';
+//   console.log({
+//     stock: indexStore.allStocksResponse,
+
+//     dividendHistoryResponse: indexStore.dividendHistoryResponse
+// })
+  const displayDividendHistory = indexStore.dividendHistoryResponse.map(
+    (value, index) => {
+      // if (indexStore.allStocksResponse.includes(value.url) ) {
+      //   displayName = indexStore.allStocksResponse;
+      // }
+
+      // indexStore.allStocksResponse.some(item => {
+      //   if(item.instruments === value.instruments ) {
+      //     displayName = item.name
+      //   }
+      // }) 
+
+      totalAmt = totalAmt + parseInt(value.amount);
+      return (
+        <React.Fragment key={index}>
+          {/* <p>Name: {displayName}</p> */}
+          <p>Amount: {indexStore.formatter().format(parseInt(value.amount))}</p>
+          <p>Date: {value.payable_date}</p>
+          <hr />
+        </React.Fragment>
+      );
+    }
+  );
   return (
-    
     <div className="dividendHistoryContainer">
-      
       <h3>Total: {indexStore.formatter().format(totalAmt)}</h3>
       {displayDividendHistory}
     </div>
   );
-
-
 });
 
 export default DividendHistory;

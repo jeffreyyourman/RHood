@@ -86,3 +86,84 @@ function emptyDBWithStocks() {
     );
   });
 }
+
+module.exports.syncPurchasingPower = async function () {
+  db.on("error", function (err) {
+    console.log("Database Error:", err);
+  });
+  db.on("connect", function () {
+    console.log("database connected");
+  });
+  try {
+    let robinhood = await rbapi.create({
+      username,
+      password,
+      deviceToken,
+    });
+    try {
+      const newHood = await robinhood.api.authenticate.refreshAccessToken({
+        id,
+      });
+      const authToken = `Bearer ${newHood.accessToken}`;
+
+      const purchasingPowerResponse = await axios(
+        "https://phoenix.robinhood.com/accounts/unified",
+        {
+          headers: {
+            accept: "*/*",
+            "accept-language": "en-US,en;q=0.9",
+            authorization: authToken,
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-site",
+            "x-robinhood-api-version": "1.315.0",
+          },
+          referrer: "https://robinhood.com/",
+          referrerPolicy: "strict-origin-when-cross-origin",
+          body: null,
+          method: "GET",
+          mode: "cors",
+        }
+      );
+      
+      
+      await emptyPurchasePowerDBWithStocks().then(console.log('emptied'));
+      
+      // purchasingPowerResponse.data.results.forEach((purchasePower) => {
+        // if (purchasePower.symbol === "DIS") {
+        //   console.log("disney DB.");
+        // }
+        (async function () {
+          await fillPurchasePowerDBWithStocks(purchasingPowerResponse.data.results).then(console.log('last'));
+        })();
+      // });
+    } catch (err) {
+      console.log("stocks err", err);
+    }
+  } catch (err) {
+    console.log("stocks err", err);
+  }
+};
+
+function fillPurchasePowerDBWithStocks(eachInstrument) {
+  return new Promise(function (resolve) {
+    db.purchasePower.update(
+      { _id: "5d7c83c37c213e60b8fdbacf" },
+      { $push: { data: eachInstrument } },
+      resolve,
+      false,
+      true
+    );
+  });
+}
+function emptyPurchasePowerDBWithStocks() {
+  return new Promise(function (resolve) {
+    db.purchasePower.update(
+      { _id: "5d7c83c37c213e60b8fdbacf" },
+      { $set: { data: [] } },
+      resolve,
+      false,
+      true
+    );
+  });
+}

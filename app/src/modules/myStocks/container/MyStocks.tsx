@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useLocalStore, observer } from "mobx-react";
 import { useIndexStore } from "../../../contexts/IndexStoreContext";
 import { allStocksResponseInterface } from "../../../App";

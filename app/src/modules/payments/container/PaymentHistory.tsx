@@ -30,8 +30,8 @@ const PaymentHistory: React.FC = observer(() => {
       totalAmt = totalAmt + parseInt(value.amount);
       return (
         <React.Fragment key={index}>
+          <p>Amount: {indexStore.formatter().format(parseInt(value.amount))}</p>
           <p>Date: {value.created_at}</p>
-          <p>Amount: {value.amount}</p>
           <hr />
         </React.Fragment>
       );
