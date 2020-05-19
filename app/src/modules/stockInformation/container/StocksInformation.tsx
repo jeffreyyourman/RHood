@@ -55,9 +55,9 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
           <p>Name: {chosenStock.name}</p>
           <p>Average buy price: {indexStore.formatter().format(parseInt(chosenStock.average_buy_price))}</p>
           <p>Average stock price: {indexStore.formatter().format(parseInt(chosenStock.intraday_average_buy_price))}</p>
-          <p>Quantity:{parseInt(chosenStock.quantity).toFixed(2)}</p>
+          <p>Quantity: {parseInt(chosenStock.quantity).toFixed(2)}</p>
           <p>Symbol: {chosenStock.symbol}</p>
-          <p>Avg dividend based off last {indexStore.formatter().format(avgDividend)}</p>
+          <p>Estimated Dividend: {indexStore.formatter().format(avgDividend)}</p>
           {localStore.stockDividendResponse.dividends.headers &&
           <table>
             <thead>
