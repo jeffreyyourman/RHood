@@ -35,7 +35,6 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
             `${API_STOCKS_DIVIDEND_URL}/${chosenStock.symbol}`
           );
           const stockDividend = StockDividendResponse.data.response.data;
-          // console.log('stockDividend',stockDividend);
           localStore.stockDividendResponse = stockDividend;
         } catch (err) {
           console.log("error", err);
@@ -47,6 +46,9 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
       return <div>loading...</div>;
 
     }
+    
+    const dividendPerQuarter: number = parseFloat(localStore.stockDividendResponse.dividends.rows[0].amount.replace('$', ''));
+    let avgDividend = parseInt(chosenStock.quantity) * dividendPerQuarter;
     return (
       <>
         <div>
@@ -55,6 +57,7 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
           <p>Average stock price: {indexStore.formatter().format(parseInt(chosenStock.intraday_average_buy_price))}</p>
           <p>Quantity:{parseInt(chosenStock.quantity).toFixed(2)}</p>
           <p>Symbol: {chosenStock.symbol}</p>
+          <p>Avg dividend based off last {indexStore.formatter().format(avgDividend)}</p>
           {localStore.stockDividendResponse.dividends.headers &&
           <table>
             <thead>
