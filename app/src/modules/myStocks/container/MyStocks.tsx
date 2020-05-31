@@ -11,30 +11,47 @@ const MyStocks: React.FC = observer(() => {
   const localStore = useLocalStore(() => ({
     chosenStock: {},
     showStockInfo: false,
-    backToAllStocks(){this.showStockInfo = !this.showStockInfo}
+    backToAllStocks(){this.showStockInfo = !this.showStockInfo},
+    totalStocksEarnings: 0,
+    totalStocksPurchase: 0
+
   }));
+  // let totalPurchase = 0;
+  // let totalEarnings = 0;
+
+  const displayStocks = indexStore.allStocksResponse.map((stock: allStocksResponseInterface) => {
+    // let totalPurchasePerShare = parseInt(stock.average_buy_price) * parseInt(stock.quantity)
+    // let totalEarningsPerShare = parseInt(stock.intraday_average_buy_price) * parseInt(stock.quantity)
+    // totalPurchase = totalPurchase += totalPurchasePerShare;
+    // totalEarnings = totalEarnings += totalEarningsPerShare;
+
+    return (
+      <div key={stock.symbol}>
+        <p>{stock.symbol}</p>
+        <button
+          onClick={() => {
+            localStore.chosenStock = stock;
+            localStore.backToAllStocks()
+          }}
+        >
+          info
+        </button>
+        <hr />
+      </div>
+      
+    );
+  })
   return (
     <div className="myStocksContainer">
       {!localStore.showStockInfo ? (
         <>
-          <h3>My Stocks: </h3>
-          {indexStore.allStocksResponse.map((stock: allStocksResponseInterface) => {
-            return (
-              <div key={stock.symbol}>
-                <p>{stock.symbol}</p>
-                <button
-                  onClick={() => {
-                    localStore.chosenStock = stock;
-                    localStore.backToAllStocks()
-                  }}
-                >
-                  info
-                </button>
-                <hr />
-              </div>
-              
-            );
-          })}
+          <h3>My Stocks: 
+            {/* {indexStore.formatter().format(parseInt(localStore.chosenStock.average_buy_price))} */}
+          </h3>
+          {/* <h5>Total Purchased: {totalPurchase === 0 ? 0 : totalPurchase}</h5>
+          <h5>Total Equity: {totalEarnings === 0 ? 0 : totalEarnings}</h5> */}
+          {displayStocks}
+
         </>
       ) : (
         <>

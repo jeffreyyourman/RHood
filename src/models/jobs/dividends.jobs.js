@@ -55,7 +55,8 @@ module.exports.dividendJob = async function () {
         //   console.log("disney DB.");
         // }
         (async function () {
-          await fillDBWithStocks(dividend).then(console.log('last'));
+          await fillDBWithStocks(dividend).then(console.log('filling dividend payment'));
+          console.log('dividend api loaded')
         })();
       });
     } catch (err) {

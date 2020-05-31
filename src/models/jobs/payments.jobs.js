@@ -53,7 +53,8 @@ module.exports.paymentsJob = async function () {
       myPayments.data.results.forEach((payment) => {
         
         (async function () {
-          await fillDBWithStocks(payment).then(console.log('last'));
+          await fillDBWithStocks(payment).then(console.log('loading payments into db'));
+          console.log('payment api filled');
         })();
       });
     } catch (err) {
@@ -134,7 +135,8 @@ module.exports.syncPurchasingPower = async function () {
         //   console.log("disney DB.");
         // }
         (async function () {
-          await fillPurchasePowerDBWithStocks(purchasingPowerResponse.data.results).then(console.log('last'));
+          await fillPurchasePowerDBWithStocks(purchasingPowerResponse.data.results).then(console.log('loading purchasing power'));
+          console.log('Purchase power api loaded');
         })();
       // });
     } catch (err) {

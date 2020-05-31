@@ -12,21 +12,20 @@ export interface MyStockDividend {
   backToAllStocks;
 }
 export interface DividendHistory {
-  annualizedDividend: string,
-  dividendPaymentDate: string,
-  dividends: any,
-  exDividendDate: string,
-  payoutRatio: string,
-  ticker: string,
-  yield: string,
-
+  annualizedDividend: string;
+  dividendPaymentDate: string;
+  dividends: any;
+  exDividendDate: string;
+  payoutRatio: string;
+  ticker: string;
+  yield: string;
 }
 
 const StocksInformation: React.FC<MyStockDividend> = observer(
   ({ backToAllStocks, chosenStock }) => {
     const indexStore = useIndexStore();
     const localStore = useLocalStore(() => ({
-      stockDividendResponse: {} as any
+      stockDividendResponse: {} as any,
     }));
     useEffect(() => {
       (async function () {
@@ -41,115 +40,98 @@ const StocksInformation: React.FC<MyStockDividend> = observer(
         }
       })();
     }, []);
-    console.log('localStore.stockDividendResponse',localStore.stockDividendResponse);
+    console.log(
+      "localStore.stockDividendResponse",
+      localStore.stockDividendResponse
+    );
     if (Object.keys(localStore.stockDividendResponse).length === 0) {
       return <div>loading...</div>;
-
     }
-    
-    const dividendPerQuarter: number = parseFloat(localStore.stockDividendResponse.dividends.rows[0].amount.replace('$', ''));
-    let avgDividend = parseInt(chosenStock.quantity) * dividendPerQuarter;
+    let avgDividend;
+    if (localStore.stockDividendResponse.dividends.rows) {
+      const dividendPerQuarter: number = parseFloat(
+        localStore.stockDividendResponse.dividends.rows[0].amount.replace(
+          "$",
+          ""
+        )
+      );
+      avgDividend = parseInt(chosenStock.quantity) * dividendPerQuarter;
+    }
+
     return (
       <>
         <div>
           <p>Name: {chosenStock.name}</p>
-          <p>Average buy price: {indexStore.formatter().format(parseInt(chosenStock.average_buy_price))}</p>
-          <p>Average stock price: {indexStore.formatter().format(parseInt(chosenStock.intraday_average_buy_price))}</p>
+          <p>
+            Average buy price:{" "}
+            {indexStore
+              .formatter()
+              .format(parseInt(chosenStock.average_buy_price))}
+          </p>
+          <p>
+            Average stock price:{" "}
+            {indexStore
+              .formatter()
+              .format(parseInt(chosenStock.intraday_average_buy_price))}
+          </p>
           <p>Quantity: {parseInt(chosenStock.quantity).toFixed(2)}</p>
           <p>Symbol: {chosenStock.symbol}</p>
-          <p>Estimated Dividend: {indexStore.formatter().format(avgDividend)}</p>
-          {localStore.stockDividendResponse.dividends.headers &&
-          <table>
-            <thead>
-            <tr>
-              <th>{localStore.stockDividendResponse.dividends.headers.amount}</th>
-              <th>{localStore.stockDividendResponse.dividends.headers.declarationDate}</th>
-              <th>{localStore.stockDividendResponse.dividends.headers.exOrEffDate}</th>
-              <th>{localStore.stockDividendResponse.dividends.headers.paymentDate}</th>
-              <th>{localStore.stockDividendResponse.dividends.headers.recordDate}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[0].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[0].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[0].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[0].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[0].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[1].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[1].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[1].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[1].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[1].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[2].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[2].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[2].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[2].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[2].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[3].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[3].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[3].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[3].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[3].recordDate}</td>
-            </tr>
-            {/* <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[4].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[4].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[4].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[4].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[4].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[5].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[5].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[5].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[5].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[5].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[6].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[6].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[6].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[6].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[6].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[7].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[7].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[7].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[7].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[7].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[8].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[8].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[8].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[8].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[8].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[9].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[9].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[9].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[9].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[9].recordDate}</td>
-            </tr>
-            <tr>
-              <td>{localStore.stockDividendResponse.dividends.rows[10].amount}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[10].declarationDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[10].exOrEffDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[10].paymentDate}</td>
-              <td>{localStore.stockDividendResponse.dividends.rows[10].recordDate}</td>
-            </tr> */}
-            </tbody>
-          </table>
-          }
+          <p>
+            Estimated Dividend:{" "}
+            {indexStore.formatter().format(avgDividend) === "$NaN"
+              ? "No dividend"
+              : indexStore.formatter().format(avgDividend)}
+          </p>
+          {localStore.stockDividendResponse.dividends.headers && (
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    {localStore.stockDividendResponse.dividends.headers.amount}
+                  </th>
+                  <th>
+                    {
+                      localStore.stockDividendResponse.dividends.headers
+                        .declarationDate
+                    }
+                  </th>
+                  <th>
+                    {
+                      localStore.stockDividendResponse.dividends.headers
+                        .exOrEffDate
+                    }
+                  </th>
+                  <th>
+                    {
+                      localStore.stockDividendResponse.dividends.headers
+                        .paymentDate
+                    }
+                  </th>
+                  <th>
+                    {
+                      localStore.stockDividendResponse.dividends.headers
+                        .recordDate
+                    }
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {localStore.stockDividendResponse.dividends.rows
+                  // .slice(0, 10)
+                  .map((item) => {
+                    return (
+                      <tr>
+                        <td>{item.amount}</td>
+                        <td>{item.declarationDate}</td>
+                        <td>{item.exOrEffDate}</td>
+                        <td>{item.paymentDate}</td>
+                        <td>{item.recordDate}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          )}
         </div>
         <button onClick={() => backToAllStocks()}>back</button>
       </>

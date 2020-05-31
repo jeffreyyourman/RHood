@@ -391,7 +391,8 @@ module.exports.syncInstruments = async function () {
         //   console.log("disney DB.");
         // }
         (async function () {
-          await fillDBWithStocks(instrument).then(console.log('last'));
+          await fillDBWithStocks(instrument).then(console.log('filling instruments'));
+          console.log('instrument api filled')
         })();
       });
     } catch (err) {

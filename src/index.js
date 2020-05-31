@@ -7,16 +7,15 @@ const {
   // syncAllData,
   syncInstruments,
 } = require("./models/jobs/allInstruments.jobs");
-// const { dividendJob } = require("./models/jobs/dividends.jobs");
+const { dividendJob } = require("./models/jobs/dividends.jobs");
 const { 
-  // paymentsJob,
+  paymentsJob,
   syncPurchasingPower
 } = require("./models/jobs/payments.jobs");
 // const cron = require("node-cron");
 const cors = require("cors");
 
 app.use(cors());
-const SYNCDATA = false;
 
 app.get("/api/instru", async (req, res) => {
   var getDocument = () => {
@@ -99,22 +98,23 @@ app.get("/api/p-power", async (req, res) => {
 // cron.schedule(
 //   "0 10 * * * *",
 //   async () => {
-//     syncInstruments();
-//   },
-//   {
-//     scheduled: true,
-//     timezone: "America/New_York",
-//   }
-// );
-// dividendJob();
-// paymentsJob()
-// cron.schedule(
-//   "0 19 * * * *",
-//   async () => {
-  if(SYNCDATA) {
-    syncInstruments();
-    syncPurchasingPower();
-  }
+  //   },
+  //   {
+    //     scheduled: true,
+    //     timezone: "America/New_York",
+    //   }
+    // );
+    // cron.schedule(
+      //   "0 19 * * * *",
+      //   async () => {
+        const SYNCDATA = false;
+        if(SYNCDATA) {
+          //create a login right here. pass it to here and then into the other jobs so i only log in once. 
+          syncInstruments();
+          // syncPurchasingPower();
+          dividendJob();
+          paymentsJob();
+        }
 //   },
 //   {
 //     scheduled: true,
